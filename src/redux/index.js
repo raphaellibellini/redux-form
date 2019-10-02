@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 const reducers = combineReducers({
-    form
+    populateFieldReducer
 })
 
 export default reducers;
