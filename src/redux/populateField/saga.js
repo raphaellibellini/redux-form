@@ -6,6 +6,7 @@ import { errors } from '../../utils/errors';
 
 export function* populateFieldActionWatcher() {
     yield takeLatest(populateFieldTypes.FIND_ALL_TIPOS_SEGUROS, findAllTiposSegurosAsync);
+    yield takeLatest(populateFieldTypes.FIND_ALL_TIPOS_CAPITAIS, findAllTiposCapitaisAsync);
 }
 
 function* findAllTiposSegurosAsync() {
@@ -25,6 +26,26 @@ function* findAllTiposSegurosAsync() {
             type: populateFieldTypes.FIND_ALL_TIPOS_SEGUROS_FAILURE,
             payload: errors.TIPOS_SEGUROS.FETCH
         });
+    }
+}
+
+function* findAllTiposCapitaisAsync() {
+    try {
+        const resp = yield api.get(endpoints.TIPOS_CAPITAIS);
+        let tiposCapitais = resp.data.resultado;
+        const isEmpty = checkForEmpty(tiposCapitais);
+        tiposCapitais = formatToOptions(tiposCapitais);
+
+        yield put({
+            type: populateFieldTypes.FIND_ALL_TIPOS_CAPITAIS_SUCCESS,
+            payload: tiposCapitais,
+            isEmpty
+        });
+    } catch (error) {
+        yield put({
+            type: populateFieldTypes.FIND_ALL_TIPOS_CAPITAIS_FAILURE,
+            payload: errors.TIPOS_SEGUROS.FETCH
+        })
     }
 }
 
