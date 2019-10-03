@@ -52,6 +52,38 @@ class ClienteForm extends Component {
                         </Field>
                     </div>
                 </div>
+                <div>
+                    <label>CNPJ</label>
+                    <div>
+                        <Field
+                            name="cnpj"
+                            component="input"
+                            placeholder="00.000.000/0000-00"
+                        />
+                    </div>
+                </div>
+                <div>
+                    <label>Razão Social</label>
+                    <div>
+                        <Field
+                            name="razaoSocial"
+                            component="input"
+                            placeholder="Nome da Empresa"
+                        />
+                    </div>
+                </div>
+                <div>
+                    <label>Email</label>
+                    <div>
+                        <Field
+                            name="email"
+                            component="input"
+                            type="email"
+                            placeholder="Email"
+                        />
+                    </div>
+                </div>
+                <button type='submit'></button>
             </form>
         )
     }
