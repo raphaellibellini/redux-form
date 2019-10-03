@@ -11,6 +11,10 @@ const initialState = {
     tiposSeguros: {
         data: [],
         ...commons
+    },
+    tiposCapitais: {
+        data: [],
+        ...commons
     }
 }
 
@@ -54,6 +58,33 @@ const populateFieldReducer = (state = initialState, action) => {
                 ...state,
                 tiposSeguros: {
                     ...state.tiposSeguros,
+                    ...failBaseState,
+                    error: action.payload
+                }
+            }
+        case populateFieldTypes.FIND_ALL_TIPOS_CAPITAIS:
+            return {
+                ...state,
+                tiposCapitais: {
+                    ...state.tiposCapitais,
+                    ...submitBaseState
+                }
+            }
+        case populateFieldTypes.FIND_ALL_TIPOS_CAPITAIS_SUCCESS:
+            return {
+                ...state,
+                tiposCapitais: {
+                    ...state.tiposCapitais,
+                    ...successBaseState,
+                    data: action.payload,
+                    isEmpty: false || action.isEmpty
+                }
+            }
+        case populateFieldTypes.FIND_ALL_TIPOS_CAPITAIS_FAILURE:
+            return {
+                ...state,
+                tiposCapitais: {
+                    ...state.tiposCapitais,
                     ...failBaseState,
                     error: action.payload
                 }
