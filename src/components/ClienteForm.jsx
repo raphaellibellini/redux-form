@@ -12,11 +12,11 @@ class ClienteForm extends Component {
 
     populateFields = () => {
         this.props.findAllTiposSeguros();
+        this.props.findAllTiposCapitais();
     }
 
     render() {
         const { error, invalid, handleSubmit, populateFieldReducer } = this.props;
-        console.log('SEG', populateFieldReducer.tiposSeguros.data);
 
         return (
             <form>
@@ -31,6 +31,22 @@ class ClienteForm extends Component {
                             {populateFieldReducer.tiposSeguros.data.map(seg => {
                                 return (
                                     <option key={seg.id} value={seg.value}>{seg.text}</option>
+                                )
+                            })}
+                        </Field>
+                    </div>
+                </div>
+                <div>
+                    <label>Tipos de Capitais</label>
+                    <div>
+                        <Field
+                            name="tiposCapitais"
+                            component="select"
+                        >
+                            <option />
+                            {populateFieldReducer.tiposCapitais.data.map(cap => {
+                                return (
+                                    <option key={cap.id} value={cap.value}>{cap.text}</option>
                                 )
                             })}
                         </Field>
