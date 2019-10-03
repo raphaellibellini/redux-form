@@ -1,9 +1,10 @@
 import React from 'react';
+import ClienteForm from '../components/ClienteForm';
 
 const Main = () => {
     return (
         <div>
-            Form
+            <ClienteForm />
         </div>
     )
 }
