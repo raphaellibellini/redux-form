@@ -25,7 +25,7 @@ class ClienteForm extends Component {
                     <label>Tipos de Seguros</label>
                     <div>
                         <Field
-                            name="tiposSeguros"
+                            name="tipoSeguroId"
                             component="select"
                         >
                             <option />
@@ -41,7 +41,7 @@ class ClienteForm extends Component {
                     <label>Tipos de Capitais</label>
                     <div>
                         <Field
-                            name="tiposCapitais"
+                            name="tipoCapitalId"
                             component="select"
                         >
                             <option />
