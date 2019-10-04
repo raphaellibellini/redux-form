@@ -10,5 +10,6 @@ export const errors = {
     TIPOS_SEGUROS: {
         FETCH: common.FETCH_ERROR + 'os Tipos de Seguro!',
         FIELD_ERROR: common.FIELD_ERROR('Tipo de Seguro')
-    }
+    },
+    SUBMIT_ERROR: 'Erro ao enviar formulário'
 }
