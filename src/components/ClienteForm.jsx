@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Field, getFormValues, reduxForm, SubmissionError } from 'redux-form';
 import { populateFieldActions } from '../redux/populateField/actions';
 import { errors } from '../utils/errors';
+import { submitActions } from '../redux/submitForm/actions';
 
 class ClienteForm extends Component {
     componentDidMount() {
@@ -17,9 +18,9 @@ class ClienteForm extends Component {
 
     render() {
         const { error, invalid, handleSubmit, populateFieldReducer } = this.props;
-
+        console.log(this.props.submitForm)
         return (
-            <form>
+            <form onSubmit={handleSubmit(this.props.submitForm)}>
                 <div>
                     <label>Tipos de Seguros</label>
                     <div>
@@ -94,7 +95,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch =>
-    bindActionCreators({ ...populateFieldActions }, dispatch);
+    bindActionCreators({ ...populateFieldActions, ...submitActions }, dispatch);
 
 ClienteForm = reduxForm({
     form: 'clienteForm'
