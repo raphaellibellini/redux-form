@@ -1,4 +1,4 @@
-import { submitTypes } from './actions';
+import { submitFormTypes } from './actions';
 
 const common = {
     loading: false,
@@ -29,18 +29,18 @@ const failBaseState = {
 
 const submitFormReducer = (state = initialState, action) => {
     switch (action.type) {
-        case submitTypes.SUBMIT_FORM:
+        case submitFormTypes.SUBMIT_FORM:
             return {
                 ...state,
                 ...submitBaseState
             }
-        case submitTypes.SUBMIT_FORM_SUCCESS:
+        case submitFormTypes.SUBMIT_FORM_SUCCESS:
             return {
                 ...state,
                 ...successBaseState,
                 data: action.payload
             }
-        case submitTypes.SUBMIT_FORM_FAILURE:
+        case submitFormTypes.SUBMIT_FORM_FAILURE:
             return {
                 ...state,
                 ...failBaseState,

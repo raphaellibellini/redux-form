@@ -1,11 +1,11 @@
 import { all } from 'redux-saga/effects';
 import { populateFieldActionWatcher } from './populateField/saga';
-import { submitActionWatcher } from './submitForm/saga';
+import { submitFormActionWatcher } from './submitForm/saga';
 
 function* rootSaga() {
     yield all([
         populateFieldActionWatcher(),
-        submitActionWatcher()
+        submitFormActionWatcher()
     ]);
 }
 
