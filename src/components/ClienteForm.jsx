@@ -11,6 +11,11 @@ class ClienteForm extends Component {
         this.populateFields();
     }
 
+    componentDidUpdate(prevProps) {
+        console.log("Estado Anterior submit Form", prevProps.submitFormReducer);
+        console.log("Estado Submit Form", this.props.submitFormReducer)
+    }
+
     populateFields = () => {
         this.props.findAllTiposSeguros();
         this.props.findAllTiposCapitais();
@@ -91,7 +96,8 @@ class ClienteForm extends Component {
 }
 
 const mapStateToProps = state => ({
-    populateFieldReducer: state.populateFieldReducer
+    populateFieldReducer: state.populateFieldReducer,
+    submitFormReducer: state.submitFormReducer,
 })
 
 const mapDispatchToProps = dispatch =>
