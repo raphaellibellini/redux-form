@@ -12,7 +12,6 @@ export function* submitFormAsync(action) {
     try {
         const body = action.payload;
         const resp = yield api.post(endpoints.POST_URL, body);
-        console.log(resp);
         const formResp = resp.data.resultado;
 
         yield put({

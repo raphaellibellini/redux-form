@@ -4,7 +4,10 @@ import { bindActionCreators } from 'redux';
 import { Field, getFormValues, reduxForm, SubmissionError } from 'redux-form';
 import { populateFieldActions } from '../redux/populateField/actions';
 import { errors } from '../utils/errors';
-import { submitActions } from '../redux/submitForm/actions';
+import { submitActions, submitFormActions } from '../redux/submitForm/actions';
+import { Form, Select } from 'semantic-ui-react';
+import * as validation from '../utils/validation';
+import MyInput from './my-input';
 
 class ClienteForm extends Component {
     componentDidMount() {
@@ -12,8 +15,8 @@ class ClienteForm extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log("Estado Anterior submit Form", prevProps.submitFormReducer);
-        console.log("Estado Submit Form", this.props.submitFormReducer)
+        // console.log("Estado Anterior submit Form", prevProps.submitFormReducer);
+        // console.log("Estado Submit Form", this.props.submitFormReducer);
     }
 
     populateFields = () => {
@@ -21,22 +24,32 @@ class ClienteForm extends Component {
         this.props.findAllTiposCapitais();
     }
 
+    validacaoBoba = (value) => {
+        return value === "mostra erro" ? "Deu erro aqui" : false;
+    }
+
+    normalizerLouco = (value) => {
+        return value + "1";
+    }
+
     render() {
         const { error, invalid, handleSubmit, populateFieldReducer } = this.props;
 
         return (
-            <form onSubmit={handleSubmit(this.props.submitForm)}>
+            <Form onSubmit={handleSubmit(this.props.submitForm)}>
                 <div>
                     <label>Tipos de Seguros</label>
                     <div>
                         <Field
                             name="tipoSeguroId"
-                            component="select"
+                            component='select'
+                        //loading={populateFieldReducer.tiposSeguros.loading}
+                        //options={populateFieldReducer.tiposSeguros.data}
                         >
                             <option />
-                            {populateFieldReducer.tiposSeguros.data.map(seg => {
+                            {populateFieldReducer.tiposSeguros.data.map((seg, index) => {
                                 return (
-                                    <option key={seg.id} value={seg.value}>{seg.text}</option>
+                                    <option key={index} value={seg.value}>{seg.text}</option>
                                 )
                             })}
                         </Field>
@@ -50,9 +63,9 @@ class ClienteForm extends Component {
                             component="select"
                         >
                             <option />
-                            {populateFieldReducer.tiposCapitais.data.map(cap => {
+                            {populateFieldReducer.tiposCapitais.data.map((cap, index) => {
                                 return (
-                                    <option key={cap.id} value={cap.value}>{cap.text}</option>
+                                    <option key={index} value={cap.value}>{cap.text}</option>
                                 )
                             })}
                         </Field>
@@ -63,18 +76,22 @@ class ClienteForm extends Component {
                     <div>
                         <Field
                             name="cnpj"
-                            component="input"
+                            component={MyInput}
+                            warningMessage={"Mensagem de Aviso!"}
                             placeholder="00.000.000/0000-00"
+                            normalize={this.normalizerLouco}
                         />
                     </div>
                 </div>
                 <div>
-                    <label>Razão Social</label>
                     <div>
                         <Field
                             name="razaoSocial"
-                            component="input"
+                            component={MyInput}
                             placeholder="Nome da Empresa"
+                            warningMessage={"Mensagem de Aviso!"}
+                            label="Razão Social"
+                            validate={[validation.campoObrigatorio, this.validacaoBoba]}
                         />
                     </div>
                 </div>
@@ -90,7 +107,7 @@ class ClienteForm extends Component {
                     </div>
                 </div>
                 <button type='submit'></button>
-            </form>
+            </Form>
         )
     }
 }
@@ -101,7 +118,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch =>
-    bindActionCreators({ ...populateFieldActions, ...submitActions }, dispatch);
+    bindActionCreators({ ...populateFieldActions, ...submitFormActions }, dispatch);
 
 ClienteForm = reduxForm({
     form: 'clienteForm'
