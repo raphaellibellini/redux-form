@@ -31,10 +31,10 @@ class ClienteForm extends Component {
         return (
             <Form onSubmit={handleSubmit(this.props.submitForm)}>
                 <div>
-                    <label>Tipos de Seguros</label>
                     <div>
                         <Field
                             name="tipoSeguroId"
+                            label="Tipos de Seguros"
                             placeholder="Selecionar"
                             type="select"
                             component={MyInput}
@@ -45,10 +45,10 @@ class ClienteForm extends Component {
                     </div>
                 </div>
                 <div>
-                    <label>Tipos de Capitais</label>
                     <div>
                         <Field
                             name="tipoCapitalId"
+                            label="Tipos de Capitais"
                             placeholder="Selecionar"
                             type="select"
                             component={MyInput}
