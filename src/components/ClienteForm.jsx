@@ -35,17 +35,13 @@ class ClienteForm extends Component {
                     <div>
                         <Field
                             name="tipoSeguroId"
-                            component='select'
-                        //loading={populateFieldReducer.tiposSeguros.loading}
-                        //options={populateFieldReducer.tiposSeguros.data}
-                        >
-                            <option />
-                            {populateFieldReducer.tiposSeguros.data.map((seg, index) => {
-                                return (
-                                    <option key={index} value={seg.value}>{seg.text}</option>
-                                )
-                            })}
-                        </Field>
+                            placeholder="Selecionar"
+                            type="select"
+                            component={MyInput}
+                            options={populateFieldReducer.tiposSeguros.data}
+                            loading={populateFieldReducer.tiposSeguros.loading}
+                            validate={validation.campoObrigatorio}
+                        ></Field>
                     </div>
                 </div>
                 <div>
@@ -53,15 +49,13 @@ class ClienteForm extends Component {
                     <div>
                         <Field
                             name="tipoCapitalId"
-                            component="select"
-                        >
-                            <option />
-                            {populateFieldReducer.tiposCapitais.data.map((cap, index) => {
-                                return (
-                                    <option key={index} value={cap.value}>{cap.text}</option>
-                                )
-                            })}
-                        </Field>
+                            placeholder="Selecionar"
+                            type="select"
+                            component={MyInput}
+                            options={populateFieldReducer.tiposCapitais.data}
+                            loading={populateFieldReducer.tiposCapitais.loading}
+                            validate={validation.campoObrigatorio}
+                        ></Field>
                     </div>
                 </div>
                 <div>
@@ -115,7 +109,8 @@ const mapDispatchToProps = dispatch =>
     bindActionCreators({ ...populateFieldActions, ...submitFormActions }, dispatch);
 
 ClienteForm = reduxForm({
-    form: 'clienteForm'
+    form: 'clienteForm',
+    touchOnChange: true
 })(ClienteForm);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClienteForm);

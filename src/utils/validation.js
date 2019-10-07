@@ -1,6 +1,5 @@
 // Verifica se campo obrigatório foi preenchido
-export const campoObrigatorio = (value) =>
-    (!value && value !== 0 ? 'O campo não está preenchido' : false);
+export const campoObrigatorio = (value) => (!value && value !== 0 ? 'O campo não está preenchido' : false);
 
 
 // Verfica se CNPJ é válido

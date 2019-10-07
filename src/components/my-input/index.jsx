@@ -6,9 +6,16 @@ const MyInput = (props) => {
     const error = props.meta.error;
     const warningMessage = props.warningMessage;
 
+
+    const handleOnChangeSelect = (_, { value }) => {
+        const input = props.input;
+        input.onChange(value)
+    }
+
     const inputToRender = () => {
         if (props.type === 'select') {
-            return <Select {...props} />
+            // no 'Select' é necessario usar o 'onChange'
+            return <Select {...props} error={touched && error ? true : false} onChange={handleOnChangeSelect} />
         } else {
             return (
                 <Form.Input fluid {...props} error={touched && error ? true : false} />
@@ -22,7 +29,6 @@ const MyInput = (props) => {
             <div>{touched && !error && warningMessage}</div>
         </>
     )
-
 }
 
 export default MyInput;

@@ -60,13 +60,14 @@ function checkForEmpty(responseArr) {
 
 function formatToOptions(valor) {
     if (valor) {
-        return valor.map((obj) => {
+        valor = valor.map((obj) => {
             return {
                 key: obj.id,
                 value: obj.id,
                 text: obj.nome
             };
         });
+        valor.unshift({ key: 0, value: false, text: "Selecionar" })
     }
     return valor;
 }
