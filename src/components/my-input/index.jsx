@@ -6,16 +6,13 @@ const MyInput = (props) => {
     const error = props.meta.error;
     const warningMessage = props.warningMessage;
 
-
     const inputToRender = () => {
         if (props.type === 'select') {
             return <Select {...props} />
         } else {
-            console.log("Propriedades Input", props)
             return (
                 <Form.Input fluid {...props} error={touched && error ? true : false} />
             )
-
         }
     }
     return (

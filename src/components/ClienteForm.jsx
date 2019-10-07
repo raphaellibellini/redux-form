@@ -7,6 +7,7 @@ import { errors } from '../utils/errors';
 import { submitActions, submitFormActions } from '../redux/submitForm/actions';
 import { Form, Select } from 'semantic-ui-react';
 import * as validation from '../utils/validation';
+import * as normalize from '../utils/normalize';
 import MyInput from './my-input';
 
 class ClienteForm extends Component {
@@ -22,14 +23,6 @@ class ClienteForm extends Component {
     populateFields = () => {
         this.props.findAllTiposSeguros();
         this.props.findAllTiposCapitais();
-    }
-
-    validacaoBoba = (value) => {
-        return value === "mostra erro" ? "Deu erro aqui" : false;
-    }
-
-    normalizerLouco = (value) => {
-        return value + "1";
     }
 
     render() {
@@ -72,14 +65,15 @@ class ClienteForm extends Component {
                     </div>
                 </div>
                 <div>
-                    <label>CNPJ</label>
                     <div>
                         <Field
                             name="cnpj"
+                            label="CNPJ"
                             component={MyInput}
-                            warningMessage={"Mensagem de Aviso!"}
                             placeholder="00.000.000/0000-00"
-                            normalize={this.normalizerLouco}
+                            //warningMessage={"Mensagem de Aviso!"}
+                            normalize={normalize.CNPJ}
+                            validate={[validation.CNPJ, validation.campoObrigatorio]}
                         />
                     </div>
                 </div>
@@ -87,22 +81,22 @@ class ClienteForm extends Component {
                     <div>
                         <Field
                             name="razaoSocial"
+                            label="Razão Social"
                             component={MyInput}
                             placeholder="Nome da Empresa"
-                            warningMessage={"Mensagem de Aviso!"}
-                            label="Razão Social"
-                            validate={[validation.campoObrigatorio, this.validacaoBoba]}
+                            validate={[validation.campoObrigatorio, validation.maxLength17]}
                         />
                     </div>
                 </div>
                 <div>
-                    <label>Email</label>
                     <div>
                         <Field
                             name="email"
-                            component="input"
+                            label='E-mail'
+                            component={MyInput}
                             type="email"
                             placeholder="Email"
+                            validate={[validation.campoObrigatorio, validation.minLength16, validation.email]}
                         />
                     </div>
                 </div>

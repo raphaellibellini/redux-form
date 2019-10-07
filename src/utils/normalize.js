@@ -8,4 +8,4 @@ export const CNPJ = (value) => {
     const cnpjPattern = '99.999.999/9999-99';
     const numOnly = onlyNumString(value);
     return value ? vanillaMasker.toPattern(numOnly, cnpjPattern) : value;
-}; s
+};
