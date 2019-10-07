@@ -1,6 +1,5 @@
 import React from 'react';
 import { Select, Input, Form } from "semantic-ui-react";
-import If from '../if/index';
 
 const MyInput = (props) => {
     const touched = props.meta.touched;
@@ -28,7 +27,7 @@ const MyInput = (props) => {
             <label>{props.label}</label>
             {inputToRender()}
             <div>{touched && error}</div>
-            <div>{touched && !error && warningMessage}</div>
+            {/*<div>{touched && !error && warningMessage}</div>*/}
         </>
     )
 }

@@ -10,9 +10,12 @@ export function* submitFormActionWatcher() {
 
 export function* submitFormAsync(action) {
     try {
+        debugger;
         const body = action.payload;
-        const resp = yield api.post(endpoints.POST_URL, body);
+        console.log(action.payload);
+        const resp = yield api.post(endpoints.POST_URL(), body);
         const formResp = resp.data.resultado;
+        console.log(formResp);
 
         yield put({
             type: submitFormTypes.SUBMIT_FORM_SUCCESS,

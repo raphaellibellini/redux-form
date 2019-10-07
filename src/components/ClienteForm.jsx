@@ -25,11 +25,16 @@ class ClienteForm extends Component {
         this.props.findAllTiposCapitais();
     }
 
+    submitForm = (values) => {
+        debugger;
+        this.props.submitForm(values);
+    }
+
     render() {
         const { error, invalid, handleSubmit, populateFieldReducer } = this.props;
 
         return (
-            <Form onSubmit={handleSubmit(this.props.submitForm)}>
+            <Form onSubmit={handleSubmit(this.submitForm)}>
                 <div>
                     <div>
                         <Field
