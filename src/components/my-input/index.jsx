@@ -20,7 +20,7 @@ const MyInput = (props) => {
             return <Select {...props} error={touched && error ? true : false} onChange={handleOnChangeSelect} className='select-field' />
         } else {
             return (
-                <Form.Input fluid {...props.input} error={touched && error ? true : false} label={null} placeholder={props.placeholder} />
+                <Form.Input fluid {...props.input} error={touched && error ? true : false} label={null} placeholder={props.placeholder} className='input-field' />
             )
         }
     }
