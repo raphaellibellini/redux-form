@@ -15,11 +15,6 @@ class ClienteForm extends Component {
         this.populateFields();
     }
 
-    componentDidUpdate(prevProps) {
-        // console.log("Estado Anterior submit Form", prevProps.submitFormReducer);
-        // console.log("Estado Submit Form", this.props.submitFormReducer);
-    }
-
     populateFields = () => {
         this.props.findAllTiposSeguros();
         this.props.findAllTiposCapitais();

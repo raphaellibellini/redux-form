@@ -13,14 +13,30 @@ const MyInput = (props) => {
     }
 
     const inputToRender = () => {
-        console.log(props);
-        console.log(props.placeholder)
+        const { name, label, placeholder, type, options, loading } = props
         if (props.type === 'select') {
             // no 'Select' é necessario usar o 'onChange'
-            return <Select {...props} error={touched && error ? true : false} onChange={handleOnChangeSelect} className='select-field' />
+            return <Select
+                name={name}
+                label={label}
+                placeholder={placeholder}
+                type={type}
+                options={options}
+                loading={loading}
+                error={touched && error ? true : false}
+                onChange={handleOnChangeSelect}
+                className='select-field'
+            />
         } else {
             return (
-                <Form.Input fluid {...props.input} error={touched && error ? true : false} label={null} placeholder={props.placeholder} className='input-field' />
+                <Form.Input
+                    name={name}
+                    label={null}
+                    placeholder={placeholder}
+                    {...props.input}
+                    error={touched && error ? true : false}
+                    className='input-field'
+                />
             )
         }
     }
