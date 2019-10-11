@@ -34,10 +34,13 @@ body {
   font-size: 18px !important;
 }
 
+.input-header {
+  margin: 20px 0 4px 0;
+}
+
 label {
-  margin-top: 20px !important;
   color: #00004d !important;
-  font-size: 18px !important;
+  font-size: 20px !important;
 }
 
 Form {
@@ -48,4 +51,9 @@ Form {
   color: #9f3a38;
   font-weight: bold;
   padding-left: 8px !important;
+}
+
+.icon {
+  margin-left: 10px !important;
+  margin-bottom: 4px !important;
 }

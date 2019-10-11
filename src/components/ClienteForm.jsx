@@ -33,10 +33,9 @@ class ClienteForm extends Component {
              * 1º parametro = nomeDoCampo
              * 2º parametro = valor
              */
-            this.props.change('nomeAgencia', agenciaNome)
+            this.props.change('nomeAgencia', agenciaNome);
         } else if (this.props.populateFieldReducer.agencia.error) {
-            this.props.change('nomeAgencia', '')
-
+            this.props.change('nomeAgencia', '');
         }
     }
 
@@ -124,7 +123,7 @@ class ClienteForm extends Component {
                         <div>
                             <Field
                                 name="numAgencia"
-                                label='Número da agência'
+                                label='Número da Agência'
                                 component={MyInput}
                                 placeholder="Número da agência"
                                 normalize={normalize.onlyNumString}

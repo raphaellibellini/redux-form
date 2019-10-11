@@ -1,11 +1,11 @@
 import React from 'react';
-import { Select, Form } from "semantic-ui-react";
+import { Select, Form, Popup, Icon } from "semantic-ui-react";
+import If from '../../components/If/index';
 
 const MyInput = (props) => {
     const touched = props.meta.touched;
     const error = props.meta.error;
     // const warningMessage = props.warningMessage;
-
 
     const handleOnChangeSelect = (_, { value }) => {
         const input = props.input;
@@ -43,7 +43,17 @@ const MyInput = (props) => {
     }
     return (
         <div className='field'>
-            <label>{props.label}</label>
+            <div className='input-header'>
+                <label>{props.label}</label>
+                <If condition={props.input.name === 'numAgencia'}>
+                    <Popup
+                        content={`Ao preencher o número da agência irá autopreencher o nome da agência`}
+                        trigger={
+                            <Icon name='info circle' color='yellow' size='large' className='icon' />
+                        }
+                    />
+                </If>
+            </div>
             {inputToRender()}
             <div className='error-msg'>{touched && (error || props.fetchError)}</div>
             {/*<div>{touched && !error && warningMessage}</div>*/}
