@@ -1,10 +1,10 @@
 import React from 'react';
-import { Select, Input, Form, Grid } from "semantic-ui-react";
+import { Select, Form } from "semantic-ui-react";
 
 const MyInput = (props) => {
     const touched = props.meta.touched;
     const error = props.meta.error;
-    const warningMessage = props.warningMessage;
+    // const warningMessage = props.warningMessage;
 
 
     const handleOnChangeSelect = (_, { value }) => {

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Field, getFormValues, reduxForm, SubmissionError } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { populateFieldActions } from '../redux/populateField/actions';
-import { errors } from '../utils/errors';
-import { submitActions, submitFormActions } from '../redux/submitForm/actions';
-import { Form, Select, Button, Grid } from 'semantic-ui-react';
+import { submitFormActions } from '../redux/submitForm/actions';
+import { Form, Button, Grid } from 'semantic-ui-react';
 import * as validation from '../utils/validation';
 import * as normalize from '../utils/normalize';
 import MyInput from './my-input';
@@ -59,7 +58,7 @@ class ClienteForm extends Component {
     };
 
     render() {
-        const { error, invalid, handleSubmit, populateFieldReducer } = this.props;
+        const { handleSubmit, populateFieldReducer } = this.props;
 
         return (
             <Grid>
