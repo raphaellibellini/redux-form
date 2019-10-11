@@ -9,10 +9,33 @@ import { Form, Select, Button, Grid } from 'semantic-ui-react';
 import * as validation from '../utils/validation';
 import * as normalize from '../utils/normalize';
 import MyInput from './my-input';
+import AGENCIA_FIELDS from '../utils/constants/agencia-fields'
 
 class ClienteForm extends Component {
     componentDidMount() {
         this.populateFields();
+    }
+
+    componentDidUpdate(prevProps) {
+        this.checkIfAgenciaChanged(prevProps);
+    }
+
+    /**
+     * @Summary Função responsável por verificar se a agencia mudou
+     */
+    checkIfAgenciaChanged = (prevProps) => {
+        const prevAgencia = prevProps.populateFieldReducer.agencia.data;
+        const prevAgenciaId = prevAgencia ? prevAgencia[AGENCIA_FIELDS.AGENCIA_ID] : null;
+        const nowAgencia = this.props.populateFieldReducer.agencia.data;
+        const nowAgenciaId = nowAgencia ? nowAgencia[AGENCIA_FIELDS.AGENCIA_ID] : null;
+        if (prevAgenciaId !== nowAgenciaId) {
+            const agenciaNome = nowAgencia[AGENCIA_FIELDS.NOME_AGENCIA];
+            /* Alterar o campo do Redux Form 
+             * 1º parametro = nomeDoCampo
+             * 2º parametro = valor
+             */
+            this.props.change('nomeAgencia', agenciaNome)
+        }
     }
 
     populateFields = () => {
@@ -23,6 +46,17 @@ class ClienteForm extends Component {
     submitForm = (values) => {
         this.props.submitForm(values);
     }
+
+    onChangeAgencia = (_, agenciaValor) => {
+        const agenciaId = agenciaValor ? parseInt(agenciaValor) : null;
+        if (agenciaId) {
+            console.log('agId', agenciaId)
+            this.props.findAgenciaName(1, agenciaId);
+        } else {
+            console.log('ERRO AGENCIA');
+            //this.props.change(this.fieldValuesName.NOME_AGENCIA, '');
+        }
+    };
 
     render() {
         const { error, invalid, handleSubmit, populateFieldReducer } = this.props;
@@ -84,6 +118,25 @@ class ClienteForm extends Component {
                                 type="email"
                                 placeholder="Email"
                                 validate={[validation.campoObrigatorio, validation.minLength16, validation.email]}
+                            />
+                        </div>
+                        <div>
+                            <Field
+                                name="numAgencia"
+                                label='Número da agência'
+                                component={MyInput}
+                                placeholder="Número da agência"
+                                normalize={normalize.onlyNumString}
+                                validate={[validation.campoObrigatorio]}
+                                onChange={this.onChangeAgencia}
+                            />
+                        </div>
+                        <div>
+                            <Field
+                                name='nomeAgencia'
+                                label='Nome da Agência'
+                                component={MyInput}
+                                loading={populateFieldReducer.agencia.loading}
                             />
                         </div>
                         <div className='button'>

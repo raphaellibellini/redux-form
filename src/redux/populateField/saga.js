@@ -7,6 +7,29 @@ import { errors } from '../../utils/errors';
 export function* populateFieldActionWatcher() {
     yield takeLatest(populateFieldTypes.FIND_ALL_TIPOS_SEGUROS, findAllTiposSegurosAsync);
     yield takeLatest(populateFieldTypes.FIND_ALL_TIPOS_CAPITAIS, findAllTiposCapitaisAsync);
+    yield takeLatest(populateFieldTypes.FIND_AGENCIA_NAME, findAgenciaNameAsync);
+}
+
+function* findAgenciaNameAsync(action) {
+    try {
+        const { bancoId, agenciaId } = action;
+        console.log(bancoId, agenciaId);
+        const resp = yield api.get(endpoints.AGENCIA(bancoId, agenciaId));
+        const agenciaResp = resp.data.resultado;
+        console.log('RESP', resp);
+        const isEmpty = !resp;
+
+        yield put({
+            type: populateFieldTypes.FIND_AGENCIA_NAME_SUCCESS,
+            payload: agenciaResp,
+            isEmpty: isEmpty
+        })
+    } catch (error) {
+        yield put({
+            type: populateFieldTypes.FIND_AGENCIA_NAME_FAIL,
+            payload: errors.AGENCIA.FETCH
+        })
+    }
 }
 
 function* findAllTiposSegurosAsync() {

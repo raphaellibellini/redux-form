@@ -1,4 +1,5 @@
 import { populateFieldTypes } from './actions';
+import AGENCIA_FIELDS from '../../utils/constants/agencia-fields';
 
 const commons = {
     loading: false,
@@ -14,6 +15,16 @@ const initialState = {
     },
     tiposCapitais: {
         data: [],
+        ...commons
+    },
+    agencia: {
+        data: {
+            // quando quiser acessar uma variavel tem que colocar entre []
+            [AGENCIA_FIELDS.ID]: null,
+            [AGENCIA_FIELDS.BANCO_ID]: null,
+            [AGENCIA_FIELDS.AGENCIA_ID]: null,
+            [AGENCIA_FIELDS.NOME_AGENCIA]: null
+        },
         ...commons
     }
 }
@@ -85,6 +96,33 @@ const populateFieldReducer = (state = initialState, action) => {
                 ...state,
                 tiposCapitais: {
                     ...state.tiposCapitais,
+                    ...failBaseState,
+                    error: action.payload
+                }
+            }
+        case populateFieldTypes.FIND_AGENCIA_NAME:
+            return {
+                ...state,
+                agencia: {
+                    ...state.agencia,
+                    ...submitBaseState
+                }
+            }
+        case populateFieldTypes.FIND_AGENCIA_NAME_SUCCESS:
+            return {
+                ...state,
+                agencia: {
+                    ...state.agencia,
+                    ...successBaseState,
+                    data: action.payload,
+                    isEmpty: false || action.isEmpty
+                }
+            }
+        case populateFieldTypes.FIND_AGENCIA_NAME_FAIL:
+            return {
+                ...state,
+                agencia: {
+                    ...state.agencia,
                     ...failBaseState,
                     error: action.payload
                 }

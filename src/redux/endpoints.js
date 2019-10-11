@@ -2,5 +2,6 @@ export const endpoints = {
     API_URL: 'http://localhost:8085/simulador-vida',
     TIPOS_SEGUROS: '/tipos-seguro',
     TIPOS_CAPITAIS: '/tipos-capital',
-    POST_URL: (comErro = false) => `/raphaelli/salvar/${comErro}`
+    POST_URL: (comErro = false) => `/raphaelli/salvar/${comErro}`,
+    AGENCIA: (bancoId, agenciaId) => `/agencia/buscar-por-banco-agencia?bancoId=${bancoId}&agenciaId=${agenciaId}`
 }
