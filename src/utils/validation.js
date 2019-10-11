@@ -43,7 +43,7 @@ const maxLength = (param) => (value) =>
     value && value.toString().length > param ? `O campo deve ter no máximo ${param} caracteres.` : false;
 
 export const maxLength17 = maxLength(17);
-
+export const maxLength4 = maxLength(4);
 
 // Verifica o mínimo de 16 caracteres
 const minLength = (param) => (value) =>

@@ -34,6 +34,7 @@ const MyInput = (props) => {
                     label={null}
                     placeholder={placeholder}
                     {...props.input}
+                    loading={loading}
                     error={touched && error ? true : false}
                     className='input-field'
                 />
@@ -44,7 +45,7 @@ const MyInput = (props) => {
         <div className='field'>
             <label>{props.label}</label>
             {inputToRender()}
-            <div className='error-msg'>{touched && error}</div>
+            <div className='error-msg'>{touched && (error || props.fetchError)}</div>
             {/*<div>{touched && !error && warningMessage}</div>*/}
         </div>
     )

@@ -27,13 +27,16 @@ class ClienteForm extends Component {
         const prevAgenciaId = prevAgencia ? prevAgencia[AGENCIA_FIELDS.AGENCIA_ID] : null;
         const nowAgencia = this.props.populateFieldReducer.agencia.data;
         const nowAgenciaId = nowAgencia ? nowAgencia[AGENCIA_FIELDS.AGENCIA_ID] : null;
-        if (prevAgenciaId !== nowAgenciaId) {
+        if (this.props.populateFieldReducer.agencia.success && prevAgenciaId !== nowAgenciaId) {
             const agenciaNome = nowAgencia[AGENCIA_FIELDS.NOME_AGENCIA];
             /* Alterar o campo do Redux Form 
              * 1º parametro = nomeDoCampo
              * 2º parametro = valor
              */
             this.props.change('nomeAgencia', agenciaNome)
+        } else if (this.props.populateFieldReducer.agencia.error) {
+            this.props.change('nomeAgencia', '')
+
         }
     }
 
@@ -52,8 +55,7 @@ class ClienteForm extends Component {
             console.log('agId', agenciaId)
             this.props.findAgenciaName(1, agenciaId);
         } else {
-            console.log('ERRO AGENCIA');
-            //this.props.change(this.fieldValuesName.NOME_AGENCIA, '');
+            this.props.change('nomeAgencia', '');
         }
     };
 
@@ -126,7 +128,7 @@ class ClienteForm extends Component {
                                 component={MyInput}
                                 placeholder="Número da agência"
                                 normalize={normalize.onlyNumString}
-                                validate={[validation.campoObrigatorio]}
+                                validate={[validation.campoObrigatorio, validation.maxLength4]}
                                 onChange={this.onChangeAgencia}
                             />
                         </div>
@@ -136,6 +138,7 @@ class ClienteForm extends Component {
                                 label='Nome da Agência'
                                 component={MyInput}
                                 loading={populateFieldReducer.agencia.loading}
+                                fetchError={populateFieldReducer.agencia.error}
                             />
                         </div>
                         <div className='button'>
