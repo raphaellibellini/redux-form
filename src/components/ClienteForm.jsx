@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, getFormValues } from 'redux-form';
 import { populateFieldActions } from '../redux/populateField/actions';
 import { submitFormActions } from '../redux/submitForm/actions';
 import { Form, Button, Grid } from 'semantic-ui-react';
 import * as validation from '../utils/validation';
 import * as normalize from '../utils/normalize';
 import MyInput from './my-input';
-import AGENCIA_FIELDS from '../utils/constants/agencia-fields'
+import AGENCIA_FIELDS from '../utils/constants/agencia-fields';
+import DADOS_CLIENTE_FORM from '../utils/constants/form';
 
 class ClienteForm extends Component {
     componentDidMount() {
@@ -42,11 +43,11 @@ class ClienteForm extends Component {
     populateFields = () => {
         this.props.findAllTiposSeguros();
         this.props.findAllTiposCapitais();
-    }
+    };
 
     submitForm = (values) => {
         this.props.submitForm(values);
-    }
+    };
 
     onChangeAgencia = (_, agenciaValor) => {
         const agenciaId = agenciaValor ? parseInt(agenciaValor) : null;
@@ -58,8 +59,20 @@ class ClienteForm extends Component {
         }
     };
 
+    /**
+     * @summary Função que implementa a ativação em sequência dos campos
+     */
+    checkIfFieldsAreFilled = (valores, fieldArr) => {
+        const valArr = fieldArr.map((element) => {
+            return valores === undefined ? false : valores[element] ? true : false;
+        });
+        return !valArr.includes(false);
+    };
+
     render() {
-        const { handleSubmit, populateFieldReducer } = this.props;
+        const { handleSubmit, populateFieldReducer, valores } = this.props;
+        console.log(populateFieldReducer)
+        console.log('AGID', populateFieldReducer.agencia.data[AGENCIA_FIELDS.ID])
 
         return (
             <Grid>
@@ -88,6 +101,9 @@ class ClienteForm extends Component {
                                 options={populateFieldReducer.tiposCapitais.data}
                                 loading={populateFieldReducer.tiposCapitais.loading}
                                 validate={validation.campoObrigatorio}
+                                disabled={!this.checkIfFieldsAreFilled(valores, [
+                                    DADOS_CLIENTE_FORM.TIPO_SEGURO
+                                ])}
                             ></Field>
                         </div>
                         <div>
@@ -99,6 +115,10 @@ class ClienteForm extends Component {
                                 //warningMessage={"Mensagem de Aviso!"}
                                 normalize={normalize.CNPJ}
                                 validate={[validation.CNPJ, validation.campoObrigatorio]}
+                                disabled={!this.checkIfFieldsAreFilled(valores, [
+                                    DADOS_CLIENTE_FORM.TIPO_SEGURO,
+                                    DADOS_CLIENTE_FORM.TIPO_CAPITAL
+                                ])}
                             />
                         </div>
                         <div>
@@ -108,6 +128,11 @@ class ClienteForm extends Component {
                                 component={MyInput}
                                 placeholder="Nome da Empresa"
                                 validate={[validation.campoObrigatorio, validation.maxLength17]}
+                                disabled={!this.checkIfFieldsAreFilled(valores, [
+                                    DADOS_CLIENTE_FORM.TIPO_SEGURO,
+                                    DADOS_CLIENTE_FORM.TIPO_CAPITAL,
+                                    DADOS_CLIENTE_FORM.CNPJ
+                                ])}
                             />
                         </div>
                         <div>
@@ -118,6 +143,12 @@ class ClienteForm extends Component {
                                 type="email"
                                 placeholder="Email"
                                 validate={[validation.campoObrigatorio, validation.minLength16, validation.email]}
+                                disabled={!this.checkIfFieldsAreFilled(valores, [
+                                    DADOS_CLIENTE_FORM.TIPO_SEGURO,
+                                    DADOS_CLIENTE_FORM.TIPO_CAPITAL,
+                                    DADOS_CLIENTE_FORM.CNPJ,
+                                    DADOS_CLIENTE_FORM.RAZAO_SOCIAL
+                                ])}
                             />
                         </div>
                         <div>
@@ -129,6 +160,13 @@ class ClienteForm extends Component {
                                 normalize={normalize.onlyNumString}
                                 validate={[validation.campoObrigatorio, validation.maxLength4]}
                                 onChange={this.onChangeAgencia}
+                                disabled={!this.checkIfFieldsAreFilled(valores, [
+                                    DADOS_CLIENTE_FORM.TIPO_SEGURO,
+                                    DADOS_CLIENTE_FORM.TIPO_CAPITAL,
+                                    DADOS_CLIENTE_FORM.CNPJ,
+                                    DADOS_CLIENTE_FORM.RAZAO_SOCIAL,
+                                    DADOS_CLIENTE_FORM.EMAIL
+                                ])}
                             />
                         </div>
                         <div>
@@ -138,6 +176,8 @@ class ClienteForm extends Component {
                                 component={MyInput}
                                 loading={populateFieldReducer.agencia.loading}
                                 fetchError={populateFieldReducer.agencia.error}
+                                disabled={populateFieldReducer.agencia.data[AGENCIA_FIELDS.ID] === null}
+                                readOnly={true}
                             />
                         </div>
                         <div className='button'>
@@ -154,6 +194,7 @@ class ClienteForm extends Component {
 const mapStateToProps = state => ({
     populateFieldReducer: state.populateFieldReducer,
     submitFormReducer: state.submitFormReducer,
+    valores: getFormValues('clienteForm')(state) // Pega todos os valores do formulario
 })
 
 const mapDispatchToProps = dispatch =>

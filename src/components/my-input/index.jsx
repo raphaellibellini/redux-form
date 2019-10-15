@@ -13,7 +13,7 @@ const MyInput = (props) => {
     }
 
     const inputToRender = () => {
-        const { name, label, placeholder, type, options, loading } = props
+        const { name, label, placeholder, type, options, loading, disabled, readOnly } = props
         if (props.type === 'select') {
             // no 'Select' é necessario usar o 'onChange'
             return <Select
@@ -26,6 +26,7 @@ const MyInput = (props) => {
                 error={touched && error ? true : false}
                 onChange={handleOnChangeSelect}
                 className='select-field'
+                disabled={disabled}
             />
         } else {
             return (
@@ -37,6 +38,8 @@ const MyInput = (props) => {
                     loading={loading}
                     error={touched && error ? true : false}
                     className='input-field'
+                    disabled={disabled}
+                    readOnly={readOnly}
                 />
             )
         }

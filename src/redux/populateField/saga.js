@@ -13,10 +13,8 @@ export function* populateFieldActionWatcher() {
 function* findAgenciaNameAsync(action) {
     try {
         const { bancoId, agenciaId } = action;
-        console.log(bancoId, agenciaId);
         const resp = yield api.get(endpoints.AGENCIA(bancoId, agenciaId));
         const agenciaResp = resp.data.resultado;
-        console.log('RESP', resp);
         const isEmpty = !resp;
 
         yield put({
